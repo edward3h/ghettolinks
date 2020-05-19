@@ -67,11 +67,11 @@ cat <<EOF
     <div class="link"><a href="$address">$title</a></div>
     <div class="description">$description</div>
     <div class="info">
-    <div class="infolabel">User</div>
+    <div class="infoLabel">User</div>
     <div class="username">$username</div>
-    <div class="infolabel">Tags</div>
+    <div class="infoLabel">Tags</div>
     <div class="tags">$tags</div>
-    <div class="infolabel">Bookmarked</div>
+    <div class="infoLabel">Bookmarked</div>
     <div class="date">$bDate</div>
     </div>
     </div>
