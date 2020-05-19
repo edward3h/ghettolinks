@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": true,
+            "database": "oa_scuttle",
+            "dialect": "MySQL",
+            "isActive": false,
+            "isConnected": false,
+            "name": "scuttle",
+            "port": 3306,
+            "server": "mysql.ordoacerbus.com",
+            "username": "edward3h"
+        }
+    ]
+}

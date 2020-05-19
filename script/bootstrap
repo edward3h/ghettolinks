@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# install or update dependencies
+
+# from https://gist.github.com/nicferrier/2277987
+clone_or_update() {
+    REPOSRC=$1
+    LOCALREPO=$2
+    LOCALREPO_VC_DIR=$LOCALREPO/.git
+
+    if [ ! -d "$LOCALREPO_VC_DIR" ]; then
+        git clone "$REPOSRC" "$LOCALREPO"
+    else
+        cd "$LOCALREPO"
+        git pull "$REPOSRC"
+    fi
+}
+
+MY_PATH=$(dirname "$0")
+PROJECT_PATH=$(dirname "$MY_PATH")
+DEPS_PATH="${PROJECT_PATH}/libs"
+mkdir -p "$DEPS_PATH"
+clone_or_update "https://github.com/ColasNahaboo/cgibashopts.git" "$DEPS_PATH/cgibashopts"
