@@ -8,16 +8,17 @@
 . common.bash
 
 QUERY="SELECT bAddress, bTitle, bDescription, username, 
-GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag) as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate
+GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag) as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
+MATCH(bTitle, bDescription) AGAINST (?) as relevance
 FROM sc_bookmarks b
 JOIN sc_users u USING (uId)
 LEFT JOIN (SELECT bId, tag FROM sc_tags WHERE tag NOT LIKE \'system:%\') t USING (bId)
 LEFT JOIN sc_tags ts USING (bId)
 WHERE (? IS NULL OR username = ?)
 AND (? IS NULL OR ts.tag = ?)
-AND (? IS NULL OR CONCAT_WS(\'|\', bTitle, bDescription) LIKE ?)
+AND (? IS NULL OR MATCH(bTitle, bDescription) AGAINST (?))
 GROUP BY 1,2,3,4,6
-ORDER BY bDatetime desc
+ORDER BY relevance desc, bDatetime desc
 LIMIT 20;"
 
 USER="NULL";
@@ -35,15 +36,15 @@ if [ -n "$FORM_tag" ]; then
 fi
 # shellcheck disable=SC2154
 if [ -n "$FORM_search" ]; then
-    SEARCH="'%${FORM_search}%'"
+    SEARCH="'${FORM_search}'"
+    SEARCHVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_search")
 fi
 
 EXECUTE_QUERY="PREPARE stmt1 FROM '$QUERY';
 SET @username = $USER;
 SET @tag = $TAG;
 SET @search = $SEARCH;
-EXECUTE stmt1 USING @username, @username, @tag, @tag, @search, @search;"
-
+EXECUTE stmt1 USING @search, @username, @username, @tag, @tag, @search, @search;"
 
 echo "Content-type: text/html"
 echo
@@ -55,10 +56,20 @@ cat <<EOH
 <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body><header><h1>Links</h1></header>
+<div id="content">
+<nav id="params">
+<form method="GET" action="">
+<div class="search">
+<input type="text" name="search" value="$SEARCHVAL">
+<input type="submit" value="Search">
+</div>
+</form>
+</nav>
 <section id="links">
 EOH
 
-$MYSQL -e "$EXECUTE_QUERY" | sed 's/\t\t/\t@NULL@\t/g' | while IFS=$'\t' read -r address title description username tags bDate; do
+# shellcheck disable=SC2034
+$MYSQL -e "$EXECUTE_QUERY" | sed 's/\t\t/\t@NULL@\t/g' | while IFS=$'\t' read -r address title description username tags bDate relevance; do
 if [ "$description" = "@NULL@" ]; then
     description=""
 fi
@@ -81,6 +92,7 @@ done
 
 cat <<EOF
 </section>
+</div>
 </body>
 </html>
 EOF

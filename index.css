@@ -3,24 +3,34 @@ body {
     background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
 }
 
-#links {
-    margin: 0 4em;
+#content {
+    display: flex;
 }
 
-div.card {
-    margin-bottom: 1em;
+#links, #params, header {
+    margin: 0 3rem;
+}
+
+#links {
+    flex-grow: 1;
+    margin-left: 0;
+    max-width: 42rem;
+}
+
+div.card, h1, div.search {
+    margin-bottom: 1rem;
     box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.30);
     background-color: white;
-    padding: 0.5em;
+    padding: 0.5rem;
 }
 
 div.info {
     display: flex;
-    font-size: 0.8em;
+    font-size: 0.8rem;
 }
 
 div.info div {
-    margin-right: 0.8em;
+    margin-right: 0.8rem;
 }
 
 div.infoLabel {
