@@ -11,13 +11,22 @@ body {
     margin: 0 3rem;
 }
 
+header {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    padding: 0 0.5rem;
+}
+
 #links {
     flex-grow: 1;
     margin-left: 0;
     max-width: 42rem;
 }
 
-div.card, h1, div.search {
+div.card, header, div.search {
     margin-bottom: 1rem;
     box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.30);
     background-color: white;

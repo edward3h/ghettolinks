@@ -29,10 +29,12 @@ SEARCH="NULL";
 # shellcheck disable=SC2154
 if [ -n "$FORM_user" ]; then
     USER="'${FORM_user}'"
+    USERVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_user")
 fi
 # shellcheck disable=SC2154
 if [ -n "$FORM_tag" ]; then
     TAG="'${FORM_tag}'"
+    TAGVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_tag")
 fi
 # shellcheck disable=SC2154
 if [ -n "$FORM_search" ]; then
@@ -55,13 +57,15 @@ cat <<EOH
 <title>Links, interim version</title>
 <link rel="stylesheet" type="text/css" href="index.css">
 </head>
-<body><header><h1>Links</h1></header>
+<body><header><h1>Links</h1><img src="HeHeartlandEstates4894iconsconstruction.gif" width="574" height="51"></header>
 <div id="content">
 <nav id="params">
 <form method="GET" action="">
 <div class="search">
 <input type="text" name="search" value="$SEARCHVAL">
 <input type="submit" value="Search">
+<input type="hidden" name="user" value="$USERVAL">
+<input type="hidden" name="tag" value="$TAGVAL">
 </div>
 </form>
 </nav>
