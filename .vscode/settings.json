@@ -11,5 +11,8 @@
             "server": "mysql.ordoacerbus.com",
             "username": "edward3h"
         }
-    ]
+    ],
+    "files.associations": {
+    "*.cgi": "shellscript"
+    }
 }
