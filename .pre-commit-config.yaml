@@ -19,6 +19,10 @@ repos:
     hooks:
       - id: markdownlint # Configure in .mdlrc
         args: ["-g"]
+  - repo: https://github.com/pre-commit/mirrors-csslint
+    rev: v1.0.5
+    hooks:
+      - id: csslint
 
   - repo: local
     hooks:
@@ -34,9 +38,15 @@ repos:
         entry: mvdan/shfmt
         types: [shell]
         args: ["-i", "4", "-ci", "-sr"]
-# uncomment below to help debug pre-commit checks
-# - repo: meta
-#   hooks:
-#       - id: check-hooks-apply
-#       - id: check-useless-excludes
-#       - id: identity
+  # uncomment below to help debug pre-commit checks
+  # - repo: meta
+  #   hooks:
+  #       - id: check-hooks-apply
+  #       - id: check-useless-excludes
+  #       - id: identity
+  - repo: git@github.com:Yelp/detect-secrets
+    rev: v0.13.1
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: .*/tests/.*
