@@ -3,24 +3,24 @@ body {
     background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
 }
 
-#content {
-    display: flex;
-}
-
-#links, #params, header {
+#container, #params, header {
     margin: 0 3rem;
 }
 
 header {
-    display: flex;
     align-items: center;
+}
+
+header, #content {
+    display: flex;
+    justify-content: center;
 }
 
 h1 {
     padding: 0 0.5rem;
 }
 
-#links {
+#container {
     flex-grow: 1;
     margin-left: 0;
     max-width: 42rem;

@@ -59,7 +59,7 @@ cat <<EOH
 </div>
 </form>
 </nav>
-<section id="links">
+<section id="container">
 EOH
 
 # shellcheck disable=SC2034

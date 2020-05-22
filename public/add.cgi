@@ -9,6 +9,12 @@ common_header
 
 cat <<EOF
 <form action="save.cgi" method="POST">
+<div id="container" class="card">
+<div class="field">
+<label for="address">Address</label>
+<input id="address" name="address" type="text">
+</div>
+</div>
 </form>
 EOF
 
