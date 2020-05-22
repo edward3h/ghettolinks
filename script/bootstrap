@@ -17,8 +17,46 @@ clone_or_update() {
     fi
 }
 
-MY_PATH=$(dirname "$0")
-PROJECT_PATH=$(dirname "$MY_PATH")
+function canexecute() {
+    EPATH=$(type -path "$1")
+    if [ -n "$EPATH" ] && [ -x "$EPATH" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+PROJECT_PATH=$(git rev-parse --show-toplevel)
 DEPS_PATH="${PROJECT_PATH}/libs"
 mkdir -p "$DEPS_PATH"
 clone_or_update "https://github.com/ColasNahaboo/cgibashopts.git" "$DEPS_PATH/cgibashopts"
+
+## pre-commit
+if ! canexecute "pre-commit"; then
+    if canexecute brew; then
+        if brew install pre-commit; then
+            echo "Installed pre-commit via brew"
+        else
+            echo "Attempted to install pre-commit via brew, but failed"
+            exit 1
+        fi
+    elif canexecute python; then
+        echo "Attempting to install a local pre-commit with python"
+        if curl https://pre-commit.com/install-local.py | python -; then
+            echo "Installed local pre-commit via python"
+        else
+            echo "Attempted to install pre-commit via python, but failed"
+            exit 1
+        fi
+    else
+        echo "Need to install pre-commit but I don't know how, please do it yourself"
+        exit 2
+    fi
+fi
+
+# install hooks
+if canexecute "pre-commit"; then
+    pre-commit install || exit 1
+    echo
+    echo "You might want to try 'pre-commit run --all-files' now"
+fi

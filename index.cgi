@@ -7,7 +7,7 @@
 # shellcheck source=common.bash
 . common.bash
 
-QUERY="SELECT bAddress, bTitle, bDescription, username, 
+QUERY="SELECT bAddress, bTitle, bDescription, username,
 GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag) as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
 MATCH(bTitle, bDescription) AGAINST (?) as relevance
 FROM sc_bookmarks b
