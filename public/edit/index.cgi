@@ -3,7 +3,7 @@
 # This page displays the form for adding or editing a bookmark. Possibly pre-populated to support bookmarklet or extension
 
 # shellcheck disable=SC1091
-. ../common.bash
+. ../../common.bash
 
 common_header
 

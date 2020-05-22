@@ -1,5 +1,6 @@
 # 'library' file
 PROJECT_PATH=$(git rev-parse --show-toplevel)
+CONTENT_ROOT=/ghettolinks
 
 # cgibashopts is an external library which doesn't meet shellcheck requirements
 # shellcheck disable=SC1090
@@ -16,9 +17,9 @@ cat <<EOH
 <html>
 <head>
 <title>Links, interim version</title>
-<link rel="stylesheet" type="text/css" href="index.css">
+<link rel="stylesheet" type="text/css" href="${CONTENT_ROOT}/index.css">
 </head>
-<body><header><h1>Links</h1><img src="HeHeartlandEstates4894iconsconstruction.gif" width="574" height="51"></header>
+<body><header><h1>Links</h1><img src="${CONTENT_ROOT}/HeHeartlandEstates4894iconsconstruction.gif" width="574" height="51"></header>
 <div id="content">
 EOH
 }
