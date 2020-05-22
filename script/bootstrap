@@ -31,6 +31,17 @@ DEPS_PATH="${PROJECT_PATH}/libs"
 mkdir -p "$DEPS_PATH"
 clone_or_update "https://github.com/ColasNahaboo/cgibashopts.git" "$DEPS_PATH/cgibashopts"
 
+if [ ! -e "$PROJECT_PATH/.mysql.cnf" ]; then
+    echo "Creating mysql conf in .mysql.cnf. You'll have to fill in some details"
+cat <<EOF > "$PROJECT_PATH/.mysql.cnf"
+[client]
+password=PASSWORD
+user=USER
+database=oa_scuttle
+host=mysql.ordoacerbus.com
+EOF
+fi
+
 ## pre-commit
 if ! canexecute "pre-commit"; then
     if canexecute brew; then
