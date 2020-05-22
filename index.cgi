@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Main page - render list of bookmarks/links
+
 # cgibashopts is an external library which doesn't meet shellcheck requirements
 # shellcheck disable=SC1091
 . libs/cgibashopts/cgibashopts
@@ -48,17 +50,9 @@ SET @tag = $TAG;
 SET @search = $SEARCH;
 EXECUTE stmt1 USING @search, @username, @username, @tag, @tag, @search, @search;"
 
-echo "Content-type: text/html"
-echo
+common_header
 
 cat <<EOH
-<html>
-<head>
-<title>Links, interim version</title>
-<link rel="stylesheet" type="text/css" href="index.css">
-</head>
-<body><header><h1>Links</h1><img src="HeHeartlandEstates4894iconsconstruction.gif" width="574" height="51"></header>
-<div id="content">
 <nav id="params">
 <form method="GET" action="">
 <div class="search">
@@ -94,9 +88,9 @@ EOF
 done
 
 
+
 cat <<EOF
 </section>
-</div>
-</body>
-</html>
 EOF
+
+common_footer

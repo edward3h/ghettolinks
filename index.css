@@ -49,3 +49,7 @@ div.infoLabel {
 div.tags {
     flex-grow: 1;
 }
+
+.error h2 {
+    color: red;
+}
