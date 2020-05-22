@@ -1,6 +1,11 @@
 # 'library' file
+PROJECT_PATH=$(git rev-parse --show-toplevel)
 
-MYSQL="mysql --defaults-extra-file=.mysql.cnf --skip-column-names --batch"
+# cgibashopts is an external library which doesn't meet shellcheck requirements
+# shellcheck disable=SC1090
+. "$PROJECT_PATH/libs/cgibashopts/cgibashopts"
+
+MYSQL="mysql --defaults-extra-file=${PROJECT_PATH}/.mysql.cnf --skip-column-names --batch"
 export MYSQL
 
 function common_header {

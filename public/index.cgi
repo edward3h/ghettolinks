@@ -2,12 +2,8 @@
 
 # Main page - render list of bookmarks/links
 
-# cgibashopts is an external library which doesn't meet shellcheck requirements
-# shellcheck disable=SC1091
-. libs/cgibashopts/cgibashopts
-
-# shellcheck source=common.bash
-. common.bash
+# shellcheck source=../common.bash
+. ../common.bash
 
 QUERY="SELECT bAddress, bTitle, bDescription, username,
 GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag) as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
