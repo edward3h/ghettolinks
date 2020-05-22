@@ -31,7 +31,7 @@ repos:
         language: docker_image
         entry: koalaman/shellcheck:stable
         types: [shell]
-        args: ["-C"]
+        args: ["-C", "-x"]
       - id: shfmt
         name: shfmt
         language: docker_image

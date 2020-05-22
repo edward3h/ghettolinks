@@ -2,7 +2,7 @@
 
 # Main page - render list of bookmarks/links
 
-# shellcheck source=../common.bash
+# shellcheck source=common.bash
 . ../common.bash
 
 QUERY="SELECT bAddress, bTitle, bDescription, username,
