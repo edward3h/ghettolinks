@@ -3,7 +3,7 @@ body {
     background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
 }
 
-#container, #params, header {
+#links, #params, header {
     margin: 0 3rem;
 }
 
@@ -20,10 +20,39 @@ h1 {
     padding: 0 0.5rem;
 }
 
-#container {
+#links {
     flex-grow: 1;
     margin-left: 0;
     max-width: 42rem;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+div.field {
+    display: flex;
+    margin: 0.1rem;
+}
+
+div.field input[type='text'] {
+    flex-grow: 1;
+    min-width: 20rem;
+}
+div.field label {
+    width: 8rem;
+    text-align: right;
+    margin: 0 0.3rem;
+}
+div.field em {
+    font-size: 0.5rem;
+}
+.field.buttons {
+    justify-content: flex-end;
+}
+button {
+    margin: 0 0.3rem;
 }
 
 div.card, header, div.search {
@@ -46,7 +75,7 @@ div.infoLabel {
     color: gray;
 }
 
-div.tags {
+div.tags, div.user {
     flex-grow: 1;
 }
 

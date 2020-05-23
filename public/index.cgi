@@ -58,8 +58,12 @@ cat <<EOH
 <input type="hidden" name="tag" value="$TAGVAL">
 </div>
 </form>
+<div class="card">
+Drag this link to your bookmark bar:
+<a href="javascript:location.href='http://192.168.164.146/ghettolinks/edit/?v=4;address='+encodeURIComponent(location.href)+';title='+encodeURIComponent(document.title)">Bookmark This</a>
+</div>
 </nav>
-<section id="container">
+<section id="links">
 EOH
 
 # shellcheck disable=SC2034
