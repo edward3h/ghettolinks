@@ -19,25 +19,25 @@ GROUP BY 1,2,3,4,6
 ORDER BY relevance desc, bDatetime desc
 LIMIT 20;"
 
-USER="NULL";
-TAG="NULL";
-SEARCH="NULL";
+USER="NULL"
+TAG="NULL"
+SEARCH="NULL"
 
 # FORM_ variables are set by cgibashopts
 # shellcheck disable=SC2154
 if [ -n "$FORM_user" ]; then
     USER="'${FORM_user}'"
-    USERVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_user")
+    USERVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<< "$FORM_user")
 fi
 # shellcheck disable=SC2154
 if [ -n "$FORM_tag" ]; then
     TAG="'${FORM_tag}'"
-    TAGVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_tag")
+    TAGVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<< "$FORM_tag")
 fi
 # shellcheck disable=SC2154
 if [ -n "$FORM_search" ]; then
     SEARCH="'${FORM_search}'"
-    SEARCHVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<<"$FORM_search")
+    SEARCHVAL=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<< "$FORM_search")
 fi
 
 EXECUTE_QUERY="PREPARE stmt1 FROM '$QUERY';
@@ -48,7 +48,7 @@ EXECUTE stmt1 USING @search, @username, @username, @tag, @tag, @search, @search;
 
 common_header
 
-cat <<EOH
+cat << EOH
 <nav id="params">
 <form method="GET" action="">
 <div class="search">
@@ -68,10 +68,10 @@ EOH
 
 # shellcheck disable=SC2034
 $MYSQL -e "$EXECUTE_QUERY" | sed 's/\t\t/\t@NULL@\t/g' | while IFS=$'\t' read -r address title description username tags bDate relevance; do
-if [ "$description" = "@NULL@" ]; then
-    description=""
-fi
-cat <<EOF
+    if [ "$description" = "@NULL@" ]; then
+        description=""
+    fi
+    cat << EOF
     <div class="card">
     <div class="link"><a href="$address">$title</a></div>
     <div class="description">$description</div>
@@ -87,9 +87,7 @@ cat <<EOF
 EOF
 done
 
-
-
-cat <<EOF
+cat << EOF
 </section>
 EOF
 

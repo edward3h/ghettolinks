@@ -33,7 +33,7 @@ clone_or_update "https://github.com/ColasNahaboo/cgibashopts.git" "$DEPS_PATH/cg
 
 if [ ! -e "$PROJECT_PATH/.mysql.cnf" ]; then
     echo "Creating mysql conf in .mysql.cnf. You'll have to fill in some details"
-cat <<EOF > "$PROJECT_PATH/.mysql.cnf"
+    cat << EOF > "$PROJECT_PATH/.mysql.cnf"
 [client]
 password=PASSWORD
 user=USER

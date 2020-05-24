@@ -8,7 +8,7 @@
 
 common_header
 
-cat <<EOF
+cat << EOF
 <form action="save.cgi" method="POST">
 <input id="id" name="id" type="hidden" value="${FORM_id}">
 <div id="container" class="card">

@@ -9,11 +9,11 @@ CONTENT_ROOT=/ghettolinks
 MYSQL="mysql --defaults-extra-file=${PROJECT_PATH}/.mysql.cnf --skip-column-names --batch"
 export MYSQL
 
-function common_header {
-echo "Content-type: text/html"
-echo
+function common_header() {
+    echo "Content-type: text/html"
+    echo
 
-cat <<EOH
+    cat << EOH
 <html>
 <head>
 <title>Links, interim version</title>
@@ -24,15 +24,15 @@ cat <<EOH
 EOH
 }
 
-function common_footer {
-cat <<EOF
+function common_footer() {
+    cat << EOF
 </div>
 </body>
 </html>
 EOF
 }
 
-function error_response {
+function error_response() {
     STATUS="500 Server Error"
     MESSAGE="Something is wrong, but I haven't implemented good error handling on this service yet, sorry."
     if [ -n "$1" ]; then
@@ -43,7 +43,7 @@ function error_response {
     fi
     echo "Status: $STATUS"
     common_header
-cat <<EOF
+    cat << EOF
 <div class="error">
 <h2>$STATUS</h2>
 <div>$MESSAGE</div>

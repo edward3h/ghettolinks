@@ -37,16 +37,16 @@ repos:
         language: docker_image
         entry: mvdan/shfmt
         types: [shell]
-        args: ["-i", "4", "-ci", "-sr"]
+        args: ["-i", "4", "-ci", "-sr", "-w"]
   # uncomment below to help debug pre-commit checks
   # - repo: meta
   #   hooks:
   #       - id: check-hooks-apply
   #       - id: check-useless-excludes
   #       - id: identity
-  - repo: git@github.com:Yelp/detect-secrets
-    rev: v0.13.1
-    hooks:
-      - id: detect-secrets
-        args: ["--baseline", ".secrets.baseline"]
-        exclude: .*/tests/.*
+  # - repo: git@github.com:Yelp/detect-secrets
+  #   rev: v0.13.1
+  #   hooks:
+  #     - id: detect-secrets
+  #       args: ["--baseline", ".secrets.baseline"]
+  #       exclude: .*/tests/.*
