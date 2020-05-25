@@ -67,6 +67,7 @@ fi
 
 # install hooks
 if canexecute "pre-commit"; then
+    cd "$PROJECT_PATH"
     pre-commit install || exit 1
     echo
     echo "You might want to try 'pre-commit run --all-files' now"
