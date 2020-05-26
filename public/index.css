@@ -7,6 +7,10 @@ body {
     margin: 0 3rem;
 }
 
+#params {
+    max-width: 15rem;
+}
+
 header {
     align-items: center;
 }

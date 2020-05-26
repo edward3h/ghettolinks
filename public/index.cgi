@@ -6,7 +6,7 @@
 . ../common.bash
 
 QUERY="SELECT bAddress, bTitle, bDescription, username,
-GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag) as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
+GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag SEPARATOR \', \') as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
 MATCH(bTitle, bDescription) AGAINST (?) as relevance
 FROM sc_bookmarks b
 JOIN sc_users u USING (uId)
@@ -52,15 +52,32 @@ cat << EOH
 <nav id="params">
 <form method="GET" action="">
 <div class="search">
+<h3>Search</h3>
 <input type="text" name="search" value="$SEARCHVAL">
 <input type="submit" value="Search">
-<input type="hidden" name="user" value="$USERVAL">
 <input type="hidden" name="tag" value="$TAGVAL">
 </div>
+EOH
+if [ -n "$REMOTE_USER" ]; then
+    cat << EOH
+<div class="search">
+<h3>User</h3>
+<input id="user_all" type="radio" name="user" value=""><label for="user_all">All links</label>
+<input id="user_me" type="radio" name="user" value="${REMOTE_USER}"><label for="user_me">My links</label>
+</div>
+EOH
+else
+    cat << EOH
+<input type="hidden" name="user" value="$USERVAL">
+EOH
+fi
+cat << EOH
 </form>
 <div class="card">
-Drag this link to your bookmark bar:
+<h3>Adding Bookmarks</h3>
+Drag this bookmarklet link to your bookmark bar:
 <a href="javascript:location.href='http://192.168.164.146/ghettolinks/edit/?v=4;address='+encodeURIComponent(location.href)+';title='+encodeURIComponent(document.title)">Bookmark This</a>
+When you're on a page you want to bookmark, click the bookmarklet.
 </div>
 </nav>
 <section id="links">
