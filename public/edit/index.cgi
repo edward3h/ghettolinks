@@ -12,13 +12,22 @@ cat << EOF
 <form action="save.cgi" method="POST">
 <input id="id" name="id" type="hidden" value="${FORM_id}">
 <div id="container" class="card">
+EOF
+
+if ((${#MISSING[@]} > 0)); then
+    echo '<div class="error">'
+    echo "Missing required fields" "${MISSING[@]}"
+    echo '</div>'
+fi
+
+cat << EOF
 <div class="field">
-<label for="address">Address</label>
-<input id="address" name="address" type="text" value="${FORM_address}">
+<label for="address">Address <em>Required</em></label>
+<input id="address" name="address" type="url" required="required" value="${FORM_address}">
 </div>
 <div class="field">
-<label for="title">Title</label>
-<input id="title" name="title" type="text" value="${FORM_title}">
+<label for="title">Title <em>Required</em></label>
+<input id="title" name="title" type="text" required="required" value="${FORM_title}">
 </div>
 <div class="field">
 <label for="description">Description</label>
@@ -29,8 +38,9 @@ cat << EOF
 <input id="tags" name="tags" type="text">
 </div>
 <div class="field buttons">
-<div class="infoLabel">User</div><div class="user">${REMOTE_USER}</div>
-<button type="button" onclick="history.back(-1)">Cancel</button>
+<label><span class="infoLabel">User</span></label>
+<span class="user">${REMOTE_USER}</span>
+<button id="cancel" type="button" onclick="history.back(-1)">Cancel</button>
 <button id="save" name="save" type="submit">Save</button>
 </div>
 </div>

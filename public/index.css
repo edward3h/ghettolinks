@@ -46,15 +46,14 @@ div.field label {
     margin: 0 0.3rem;
 }
 div.field em {
-    font-size: 0.5rem;
-}
-.field.buttons {
-    justify-content: flex-end;
+    font-size: 0.4rem;
 }
 button {
     margin: 0 0.3rem;
 }
-
+.field .user {
+    flex-grow: 1;
+}
 div.card, header, div.search {
     margin-bottom: 1rem;
     box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.30);
@@ -71,7 +70,7 @@ div.info div {
     margin-right: 0.8rem;
 }
 
-div.infoLabel {
+.infoLabel {
     color: gray;
 }
 
@@ -79,6 +78,11 @@ div.tags, div.user {
     flex-grow: 1;
 }
 
-.error h2 {
+div.error {
     color: red;
+}
+
+pre {
+    background-color: darkslategrey;
+    color: greenyellow;
 }
