@@ -28,12 +28,12 @@ fi
 common_header
 
 echo "<pre>"
-echo "TAGS " "${TAGS[@]}"
 if [ -n "$FORM_id" ]; then
     # existing id - do an update
     # TODO
-    $MYSQL << EOF
-EOF
+    # $MYSQL << EOF
+    echo "<div class=${QQ}error${QQ}>I haven't implemented updates yet, sorry.</div>"
+    EOF
 else
     # no id - do an insert
     {
@@ -43,7 +43,6 @@ else
             TAG_INSERTS="${TAG_INSERTS}
 SET @tag = '${tag}'; EXECUTE insertTag USING @newId, @tag;"
         done
-        echo "TAG_INSERTS ${TAG_INSERTS}"
 
         $MYSQL 2>&1 << EOF
 PREPARE insertStmt from 'INSERT INTO sc_bookmarks(bAddress, bDescription, bHash, bStatus, bTitle, uId, bDatetime, bModified) SELECT ?, ?, md5(?), 0, ?, u.uId, now(), now() FROM sc_users u WHERE u.username = ?';
@@ -59,8 +58,27 @@ EOF
     }
 fi
 
-echo "$?"
+status="$?"
 
 echo "</pre>"
+
+if [ "$status" = "0" ]; then
+    cat << EOF
+<div class="card">
+<h2>Saved Successfully</h2>
+<ul>
+<li>Go to <a href="/ghettolinks/">Links home page</a>.</li>
+<li>Go back to <a href="${FORM_address}">${FORM_title}</a>.</li>
+</ul>
+</div>
+EOF
+else
+    cat << EOF
+<div class="card">
+<h2>Save failed for some reason</h2>
+<div>Maybe there's some error output above. 😳</div>
+</div>
+EOF
+fi
 
 common_footer
