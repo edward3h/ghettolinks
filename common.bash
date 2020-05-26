@@ -52,3 +52,6 @@ EOF
     common_footer
     exit 0
 }
+
+# handy for quoting issues. Sometimes
+export QQ='"'
