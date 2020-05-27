@@ -19,6 +19,7 @@ repos:
     hooks:
       - id: markdownlint # Configure in .mdlrc
         args: ["-g"]
+  # TODO looks like csslint doesn't support grid
   # - repo: https://github.com/pre-commit/mirrors-csslint
   #   rev: v1.0.5
   #   hooks:
