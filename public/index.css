@@ -27,7 +27,6 @@ h1 {
 #links {
     flex-grow: 1;
     margin-left: 0;
-    max-width: 42rem;
 }
 
 #container {
@@ -65,8 +64,45 @@ div.card, header, div.search {
     padding: 0.5rem;
 }
 
-div.info {
+#links .card {
+    display: grid;
+    grid-template-columns: repeat(6, auto) 194px;
+    grid-template-areas:
+        "link link link link link link thumbnail"
+        "description description description description description description thumbnail"
+        ". . . . . . thumbnail";
+    column-gap: 0.4rem;
+}
+
+#links .card .link {
+    grid-area: link;
+}
+
+#links .card .link a {
     display: flex;
+    align-items: center;
+}
+
+#links .card .link a span {
+    display: block;
+}
+
+.favicon {
+    padding-right: 2px;
+}
+
+#links .card .description {
+    grid-area: description;
+}
+
+#links .card .thumbnail {
+    grid-area: thumbnail;
+    border: solid thin grey;
+}
+
+#links .card
+
+div.info {
     font-size: 0.8rem;
 }
 
@@ -76,6 +112,7 @@ div.info div {
 
 .infoLabel {
     color: gray;
+    justify-self: end;
 }
 
 div.tags, div.user {

@@ -7,7 +7,7 @@
 
 QUERY="SELECT bAddress, bTitle, bDescription, username,
 GROUP_CONCAT(DISTINCT t.tag ORDER by t.tag SEPARATOR \', \') as tags, DATE_FORMAT(bDatetime, \'%Y-%m-%d\') as bDate,
-MATCH(bTitle, bDescription) AGAINST (?) as relevance
+MATCH(bTitle, bDescription) AGAINST (?) as relevance, bFavicon, bId
 FROM sc_bookmarks b
 JOIN sc_users u USING (uId)
 LEFT JOIN (SELECT bId, tag FROM sc_tags WHERE tag NOT LIKE \'system:%\') t USING (bId)
@@ -84,22 +84,33 @@ When you're on a page you want to bookmark, click the bookmarklet.
 EOH
 
 # shellcheck disable=SC2034
-$MYSQL -e "$EXECUTE_QUERY" | sed 's/\t\t/\t@NULL@\t/g' | while IFS=$'\t' read -r address title description username tags bDate relevance; do
+$MYSQL -e "$EXECUTE_QUERY" | sed 's/\t\t/\t@NULL@\t/g' | while IFS=$'\t' read -r address title description username tags bDate relevance favicon id; do
     if [ "$description" = "@NULL@" ]; then
         description=""
     fi
+    if [ -f "favicons/$favicon" ]; then
+        FIIMAGE="<img class=${QQ}favicon${QQ} src=${QQ}favicons/$favicon${QQ}>"
+    else
+        FIIMAGE="<span class=${QQ}favicon${QQ}>🔗</span> "
+    fi
+    if [ -f "thumbnails/${id}.png" ]; then
+        THIMAGE="<img src=${QQ}thumbnails/${id}.png${QQ}>"
+    else
+        THIMAGE=""
+    fi
     cat << EOF
     <div class="card">
-    <div class="link"><a href="$address">$title</a></div>
+    <div class="link"><a href="$address">${FIIMAGE}<span>$title</span></a></div>
     <div class="description">$description</div>
-    <div class="info">
-    <div class="infoLabel">User</div>
-    <div class="username">$username</div>
-    <div class="infoLabel">Tags</div>
-    <div class="tags">$tags</div>
-    <div class="infoLabel">Bookmarked</div>
-    <div class="date">$bDate</div>
-    </div>
+
+    <div class="info infoLabel">User</div>
+    <div class="info username">$username</div>
+    <div class="info infoLabel">Tags</div>
+    <div class="info tags">$tags</div>
+    <div class="info infoLabel">Bookmarked</div>
+    <div class="info date">$bDate</div>
+
+    <div class="thumbnail"><a href="$address">$THIMAGE</a></div>
     </div>
 EOF
 done
