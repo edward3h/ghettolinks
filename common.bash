@@ -10,7 +10,7 @@ MYSQL="mysql --defaults-extra-file=${PROJECT_PATH}/.mysql.cnf --skip-column-name
 export MYSQL
 
 function common_header() {
-    echo "Content-type: text/html"
+    echo "Content-type: text/html; charset=UTF-8"
     echo
 
     cat << EOH

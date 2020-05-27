@@ -56,6 +56,7 @@ cat << EOH
 <input type="text" name="search" value="$SEARCHVAL">
 <input type="submit" value="Search">
 <input type="hidden" name="tag" value="$TAGVAL">
+<a href="/ghettolinks/">Clear filters</a>
 </div>
 EOH
 if [ -n "$REMOTE_USER" ]; then

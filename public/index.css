@@ -66,7 +66,7 @@ div.card, header, div.search {
 
 #links .card {
     display: grid;
-    grid-template-columns: repeat(6, auto) 194px;
+    grid-template-columns: auto auto auto 1fr auto auto 194px;
     grid-template-areas:
         "link link link link link link thumbnail"
         "description description description description description description thumbnail"
