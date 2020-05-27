@@ -20,8 +20,13 @@ EOF
 
 }
 
+function is_locked() {
+    echo "File lock is held - will not run"
+    exit 1
+}
+
 exec 123> /var/lock/acquire_assets
-flock -n 123 || exit 1
+flock -n 123 || is_locked
 
 {
     $MYSQL << EOF
