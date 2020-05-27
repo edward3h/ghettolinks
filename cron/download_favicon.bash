@@ -67,17 +67,17 @@ fi
 parse_url "$URL"
 
 if [ -z "$FILENAME" ]; then
-    FILENAME=$(echo "favicon_${host}" | sed -E -e 's/^[^A-Za-z0-9]+//;s/[^A-Za-z0-9]+$//;s/[^A-Za-z0-9]+/_/g;')
+    FILENAME=$(sed -E -e 's/^[^A-Za-z0-9]+//;s/[^A-Za-z0-9]+$//;s/[^A-Za-z0-9]+/_/g;' <<< "favicon_${host}")
 fi
 
-if grep -v '\.png$' <<< "$FILENAME"; then
+if grep -q -v '\.png$' <<< "$FILENAME"; then
     FILENAME="$FILENAME.png"
 fi
 
 if [ -f "$FILENAME" ]; then
-    echo "Favicon already exists as '$FILENAME'"
+    echo "$FILENAME"
     exit 0
 fi
 
 wget -O "$FILENAME" "https://www.google.com/s2/favicons?domain=${host}" || exit 1
-echo "Favicon saved as '$FILENAME'"
+echo "$FILENAME"
