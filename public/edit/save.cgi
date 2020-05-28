@@ -1,5 +1,6 @@
 #!/bin/bash
 # shellcheck disable=SC2154
+# shellcheck disable=SC2001
 
 # This page saves results from adding or editing a bookmark
 # shellcheck disable=SC1091
@@ -39,16 +40,20 @@ else
     {
         TAG_INSERTS=""
         for tag in "${TAGS[@]}"; do
-            tag=$(sed -e 's/^[[:space:]]*//; s/[[:space:]]$//' <<< "$tag")
+            tag=$(sed -e "s/^[[:space:]]*//; s/[[:space:]]$//; s/'/''/g" <<< "$tag")
             TAG_INSERTS="${TAG_INSERTS}
 SET @tag = '${tag}'; EXECUTE insertTag USING @newId, @tag;"
         done
 
+        # escape '
+        SQL_description=$(sed -e "s/'/''/g" <<< "$FORM_description")
+        SQL_title=$(sed -e "s/'/''/g" <<< "$FORM_title")
+
         $MYSQL 2>&1 << EOF
 PREPARE insertStmt from 'INSERT INTO sc_bookmarks(bAddress, bDescription, bHash, bStatus, bTitle, uId, bDatetime, bModified) SELECT ?, ?, md5(?), 0, ?, u.uId, now(), now() FROM sc_users u WHERE u.username = ?';
 SET @address = '$FORM_address';
-SET @description = '$FORM_description';
-SET @title = '$FORM_title';
+SET @description = '$SQL_description';
+SET @title = '$SQL_title';
 SET @username = '$REMOTE_USER';
 EXECUTE insertStmt USING @address, @description, @address, @title, @username;
 SELECT @newId := LAST_INSERT_ID();
