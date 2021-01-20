@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# Given a URL, extract the hostname, then use a google service to download the
+# favicon associated with that host.
+#
+
 function canexecute() {
     EPATH=$(type -path "$1")
     if [ -n "$EPATH" ] && [ -x "$EPATH" ]; then

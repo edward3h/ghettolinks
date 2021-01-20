@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# Given a URL, use headless Chrome to capture a screenshot and save a thumbnail
+# image.
+#
+
 function canexecute() {
     EPATH=$(type -path "$1")
     if [ -n "$EPATH" ] && [ -x "$EPATH" ]; then

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# cron script. Query the database for bookmarks without thumbnail, then trigger
+# the scripts to download favicon and thumbnail.
+#
+
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null 2>&1 && pwd)"
 PROJECT_ROOT=$(dirname "$DIR")
 THUMBNAILS="$PROJECT_ROOT/data/thumbnails"
