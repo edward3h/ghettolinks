@@ -133,6 +133,6 @@ fi
 
 SCREENSIZE=$(tr 'x' ',' <<< "$SCREENSIZE")
 
-docker container run --rm -v "$PWD:/usr/src/app" zenika/alpine-chrome --no-sandbox --screenshot="$FILENAME" --hide-scrollbars --window-size="$SCREENSIZE" "$URL"
+timeout -k 3m 3m docker container run --name download_thumbnail --rm -v "$PWD:/usr/src/app" zenika/alpine-chrome --no-sandbox --screenshot="$FILENAME" --hide-scrollbars --window-size="$SCREENSIZE" "$URL" || exit 1
 mogrify -resize "$THUMBNAILSIZE" "$FILENAME"
 echo "Thumbnail saved as '$FILENAME'"
