@@ -14,7 +14,7 @@ LEFT JOIN (SELECT bId, tag FROM sc_tags WHERE tag NOT LIKE \'system:%\') t USING
 LEFT JOIN sc_tags ts USING (bId)
 WHERE (? IS NULL OR username = ?)
 AND (? IS NULL OR ts.tag = ?)
-AND (? IS NULL OR MATCH(bTitle, bDescription) AGAINST (?))
+AND (? IS NULL OR MATCH(bTitle, bDescription) AGAINST (?) OR ts.tag = ?)
 GROUP BY 1,2,3,4,6
 ORDER BY relevance desc, bDatetime desc
 LIMIT 20;"
@@ -44,7 +44,7 @@ EXECUTE_QUERY="PREPARE stmt1 FROM '$QUERY';
 SET @username = $USER;
 SET @tag = $TAG;
 SET @search = $SEARCH;
-EXECUTE stmt1 USING @search, @username, @username, @tag, @tag, @search, @search;"
+EXECUTE stmt1 USING @search, @username, @username, @tag, @tag, @search, @search, @search;"
 
 common_header
 
